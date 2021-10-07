@@ -76,7 +76,7 @@ module.exports = Object.freeze({
 
       CONSTRAINT SUBJECT_PK PRIMARY KEY (subjectId)
   );
-  
+
   CREATE TABLE PROJECT (
       projectId SERIAL,
       name varchar(50) NOT NULL,
@@ -92,6 +92,24 @@ module.exports = Object.freeze({
         REFERENCES COMMON_USER (userId),
       CONSTRAINT PROJECT_SUBJECT_FK FOREIGN KEY (subjectId)
         REFERENCES SUBJECT (subjectId)
+  );
+
+  CREATE TABLE KNOWLEDGE_AREA (
+      knoledgeAreaId SERIAL,
+      knowledgeArea VARCHAR(100) NOT NULL,
+
+      CONSTRAINT KNOWLEDGE_AREA_PK PRIMARY KEY (idKnoledgeArea)
+  );
+
+  CREATE TABLE has (
+      knoledgeAreaId SERIAL NOT NULL,
+      projectId SERIAL NOT NULL,
+
+      CONSTRAINT has_KNOWLEGDE_AREA_FK FOREIGN KEY (knoledgeAreaId)
+        REFERENCES KNOWLEDGE_AREA (knoledgeAreaId),
+      CONSTRAINT has_PROJECT FOREIGN KEY (projectId)
+        REFERENCES PROJECT (projectId),
+      CONSTRAINT has_UK UNIQUE (knoledgeAreaId, projectId)
   );
 
   CREATE TABLE FILE (
